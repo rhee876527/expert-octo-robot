@@ -3,5 +3,7 @@
   "extends": [
     "config:recommended"
   ],
-  "fileMatch": ["^test/package.json$"]
+  "npm": {
+    "fileMatch": ["^test/package.json$"]
+  }
 }
