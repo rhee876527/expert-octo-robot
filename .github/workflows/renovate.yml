@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Renovate
-        uses: renovatebot/github-action@v40.3.4
+        uses: renovatebot/github-action@v40.3.6
         with:
           # You can customize Renovate configuration here if needed
           # For example, to specify the configuration file path:
