@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caddy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: caddy
+  template:
+    metadata:
+      labels:
+        app: caddy
+    spec:
+      containers:
+        - name: caddy
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            - name: CADDY_INGRESS_NETWORKS
+              value: "npm"
+            - name: CADDY_DOCKER_CADDYFILE_PATH
+              value: "/etc/caddy/global.conf"
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+              readOnly: true
+            - name: caddy-config
+              mountPath: /etc/caddy/
+              readOnly: true
+            - name: caddy-data-1
+              mountPath: /data
+            - name: caddy-data-2
+              mountPath: /var/www/public
+              readOnly: true
+
+      restartPolicy: Always
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: caddy-config
+          configMap:
+            name: caddy-config
+        - name: caddy-data-1
+          hostPath:
+            path: "{{ include "get.appsDir" . }}/caddy/data"
+
+        - name: caddy-data-2
+          hostPath:
+            path: "{{ include "get.appsDir" . }}/caddy/www"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: caddy
+spec:
+  selector:
+    app: caddy
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30003
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+      nodePort: 30006
+  type: LoadBalancer
+  externalTrafficPolicy: Local
