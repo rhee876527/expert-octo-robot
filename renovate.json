@@ -13,5 +13,9 @@
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
-  ]
+  ],
+  "enabledManagers": ["helm-values"],
+  "helm-values": {
+    "fileMatch": ["(^|/)values\\.ya?ml$"]
+  }
 }
