@@ -1,7 +1,0 @@
-{
-  "name": "renovate-test",
-  "version": "1.0.0",
-  "dependencies": {
-    "lodash": "^4.16.6"
-  }
-}
