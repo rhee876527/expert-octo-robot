@@ -15,7 +15,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["**"],
+      "fileMatch": ["(^|\\/).+$"],
       "matchStrings": [
         "(?:image|repository):\\s*[\"']?(?<depName>[^\"'\\s]+?)(?::(?<currentValue>[^\"'\\s]+))?[\"']?",
         "tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
