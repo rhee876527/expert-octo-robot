@@ -3,5 +3,11 @@
   "rebaseWhen": "conflicted",
   "labels": ["dependencies"],
   "automergeStrategy": "merge-commit",
-  "prHourlyLimit": 2
+  "prHourlyLimit": 2,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor"],
+      "automerge": true
+    }
+  ]
 }
