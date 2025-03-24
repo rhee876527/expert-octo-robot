@@ -4,4 +4,4 @@ secrets:
 
 image:
   repository: lucaslorentz/caddy-docker-proxy
-  tag: 2.9.2
+  tag: 2.9.1
