@@ -6,7 +6,7 @@
   "prHourlyLimit": 2,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
   ]
