@@ -1,20 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "baseBranches": ["main"],
+  "extends": [
+    "config:recommended"
+  ],
+  "baseBranches": [
+    "main"
+  ],
   "rebaseWhen": "conflicted",
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "automergeStrategy": "merge-commit",
   "prHourlyLimit": 12,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["(^|/)values\\.ya?ml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)values\\.ya?ml$"
+      ],
       "matchStrings": [
         "repository:\\s?\"?(?<depName>[^\"\\s]+)\"?\\s*\\ntag:\\s?\"?(?<currentValue>[^\"]+)\"?"
       ],
