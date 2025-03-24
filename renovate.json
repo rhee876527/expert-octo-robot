@@ -15,7 +15,14 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["*"],
+      "fileMatch": [
+        "*.yaml",
+        "*/.yml",
+        "*/*.yaml",
+        "*/*.yml",
+        "*/**/.yaml",
+        "*/**/.yml"        
+      ],
       "matchStrings": [
         "(?:image|repository):\\s*[\"']?(?<depName>[^\"'\\s]+?)(?::(?<currentValue>[^\"'\\s]+))?[\"']?",
         "tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
