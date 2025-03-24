@@ -32,5 +32,9 @@
       ],
       "datasourceTemplate": "docker"
     }
+  ],
+  "includePaths": [
+    "**/values.yaml",
+    "**/values.yml"
   ]
 }
