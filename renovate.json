@@ -10,16 +10,5 @@
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Update docker versions",
-      "fileMatch": ["(^|/|\\.)values\\.yaml$"],
-      "matchStrings": [
-        "repository:\\s*[\"']?(?<depName>[^\"'\\s:]+(?:/[^\"'\\s:]+)*)[\"']?\\s*\\n\\s*tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
-      ],
-      "datasourceTemplate": "docker"
-    }
   ]
 }
