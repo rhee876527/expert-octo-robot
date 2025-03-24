@@ -28,13 +28,9 @@
         "(^|/)values\\.ya?ml$"
       ],
       "matchStrings": [
-        "repository:\\s?\"?(?<depName>[^\"\\s]+)\"?\\s*\\ntag:\\s?\"?(?<currentValue>[^\"]+)\"?"
+        "image:\\s*\\n\\s*repository:\\s*\"?(?<depName>[^\"\\s]+)\"?\\s*\\n\\s*tag:\\s*\"?(?<currentValue>[^\"]+)\"?"
       ],
       "datasourceTemplate": "docker"
     }
-  ],
-  "includePaths": [
-    "**/values.yaml",
-    "**/values.yml"
   ]
 }
