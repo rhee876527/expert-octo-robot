@@ -17,8 +17,7 @@
       "customType": "regex",
       "fileMatch": ["(^|\\/).+$"],
       "matchStrings": [
-        "(?:image|repository):\\s*[\"']?(?<depName>[^\"'\\s]+?)(?::(?<currentValue>[^\"'\\s]+))?[\"']?",
-        "tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
+        "repository:\\s*[\"']?(?<depName>[^\"'\\s:]+(?:/[^\"'\\s:]+)*)[\"']?\\s*\\n\\s*tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
       ],
       "datasourceTemplate": "docker"
     }
