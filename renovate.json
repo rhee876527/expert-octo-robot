@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "baseBranches": ["main"],
   "rebaseWhen": "conflicted",
   "labels": ["dependencies"],
@@ -14,8 +12,13 @@
       "automerge": true
     }
   ],
-  "enabledManagers": ["helm-values"],
-  "helm-values": {
-    "fileMatch": ["(^|/)values\\.ya?ml$"]
-  }
+  "regexManagers": [
+    {
+      "fileMatch": ["(^|/)values\\.ya?ml$"],
+      "matchStrings": [
+        "repository:\\s?\"?(?<depName>[^\"\\s]+)\"?\\s*\\ntag:\\s?\"?(?<currentValue>[^\"]+)\"?"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
 }
