@@ -21,6 +21,5 @@
       ],
       "datasourceTemplate": "docker"
     }
-  ],
-  "logLevel": "debug"
+  ]
 }
