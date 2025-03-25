@@ -3,5 +3,5 @@ secrets:
   name: my-secrets
 
 image:
-  repository: lucaslorentz/caddy-docker-proxy
-  tag: 2.9.2
+  repository: ghcr.io/onedr0p/bazarr
+  tag: sha256:5eb3ff2384c470fa351ff486b1b61660914a2ba144e908258cf111555a583356
