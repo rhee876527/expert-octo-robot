@@ -30,8 +30,8 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
-            runAsGroup: "{{ .Values.user.PGID }}"
-            runAsUser: "{{ .Values.user.PUID }}"
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
           volumeMounts:
             - mountPath: /workdir/config/config.js
               name: cloudtube-hostpath1
