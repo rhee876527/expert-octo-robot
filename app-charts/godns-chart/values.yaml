@@ -1,7 +1,4 @@
 # values.yaml
-secrets:
-  name: my-secrets
-
 image:
   repository: timothyye/godns
   tag: 3.2.2
