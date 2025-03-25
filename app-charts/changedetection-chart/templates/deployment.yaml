@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: changedetection
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: changedetection
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: changedetection
+    spec:
+      containers:
+        - env:
+            - name: DISABLE_VERSION_CHECK
+              value: "true"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: changedetection
+          ports:
+            - containerPort: 5000
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /datastore
+              name: changedetection-data
+      hostname: changedetection
+      restartPolicy: Always
+      volumes:
+      - name: changedetection-data
+        hostPath:
+          path: "{{ include "get.appsDir" . }}/changedetection/data"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: changedetection
+spec:
+  selector:
+    app: changedetection
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
