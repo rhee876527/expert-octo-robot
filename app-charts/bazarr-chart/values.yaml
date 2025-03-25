@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: ghcr.io/onedr0p/bazarr
-  tag: rolling
+  tag: rolling@sha256:8605acf02f9fd3228a17eb83f1f69e4f10e70ba387017607c98e974aced6f79d
 
 env:
   TZ: Africa/Nairobi
