@@ -1,0 +1,7 @@
+# values.yaml
+image:
+  repository: 21hsmw/flaresolverr
+  pinned: sha256:3d99be35f845750adba3b9aa23844b7f585eeac6b1b45157bf14aaa8f7d16e20
+
+env:
+  TZ: Africa/Nairobi
