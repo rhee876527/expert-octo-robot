@@ -28,8 +28,8 @@ spec:
             - containerPort: 6767
           securityContext:
             allowPrivilegeEscalation: false
-            runAsGroup: "{{ .Values.user.GUID }}"
-            runAsUser: "{{ .Values.user.PUID }}"
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
           volumeMounts:
             - name: config
               mountPath: /config
