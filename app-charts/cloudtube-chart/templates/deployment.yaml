@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudtube
+  name: cloudtube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudtube
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cloudtube
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: cloudtube
+          ports:
+            - containerPort: 10412
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: "{{ .Values.user.PGID }}"
+            runAsUser: "{{ .Values.user.PUID }}"
+          volumeMounts:
+            - mountPath: /workdir/config/config.js
+              name: cloudtube-hostpath1
+              readOnly: true
+            - mountPath: /workdir/api/video.js
+              name: cloudtube-hostpath2
+              readOnly: true
+            - mountPath: /workdir/pug/settings.pug
+              name: cloudtube-hostpath3
+              readOnly: true
+            - mountPath: /workdir/html/static/js/player.js
+              name: cloudtube-hostpath4
+              readOnly: true
+            - mountPath: /workdir/db
+              name: cloudtube-hostpath5
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/cloudtube/config.js"
+          name: cloudtube-hostpath1
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/cloudtube/new.video"
+          name: cloudtube-hostpath2
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/cloudtube/settings.pug"
+          name: cloudtube-hostpath3
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/cloudtube/new.player.5"
+          name: cloudtube-hostpath4
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/cloudtube/cloudtube/db"
+          name: cloudtube-hostpath5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudtube
+spec:
+  selector:
+    app: cloudtube
+  ports:
+    - protocol: TCP
+      port: 10412
+      targetPort: 10412
