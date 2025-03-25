@@ -1,0 +1,14 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: ghcr.io/onedr0p/bazarr
+  tag: rolling
+
+env:
+  TZ: Africa/Nairobi
+
+user:
+  PUID: 1001
+  PGID: 1001
