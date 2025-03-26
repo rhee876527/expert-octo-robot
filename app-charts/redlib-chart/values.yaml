@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: quay.io/redlib/redlib
-  tag: latest@sha256:b8fa3c3c2a5b7fe045e8f8eb95feac3c50b37837478ecc11d49db8fa8ddff683
+  tag: latest@sha256:99be5ca3b9d1578d9a1caabd9cb821849383ed3a6a419e5c1e377fd33108fef4
 
 user:
   PUID: 121
