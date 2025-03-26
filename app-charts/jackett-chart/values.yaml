@@ -1,0 +1,14 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: lscr.io/linuxserver/jackett
+  tag: latest@sha256:b8fa3c3c2a5b7fe045e8f8eb95feac3c50b37837478ecc11d49db8fa8ddff683
+
+env:
+  TZ: Africa/Nairobi
+
+user:
+  PUID: 131
+  PGID: 135
