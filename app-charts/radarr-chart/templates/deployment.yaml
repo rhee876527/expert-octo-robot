@@ -40,7 +40,7 @@ spec:
           path: "{{ include "get.appsDir" . }}/radarr/raddarr"
       - name: data
         hostPath:
-          path: "{{ include "get.mediaDir" . }}"
+          path: "{{ include "get.mediarootDir" . }}"
 
 ---
 apiVersion: v1

@@ -4,6 +4,6 @@
 {{- end -}}
 
 # Get media directory
-{{- define "get.mediaDir" -}}
-{{- (lookup "v1" "Secret" .Release.Namespace .Values.secrets.name).data.MEDIA_DIR | b64dec -}}
+{{- define "get.mediarootDir" -}}
+{{- (lookup "v1" "Secret" .Release.Namespace .Values.secrets.name).data.MEDIA_DIR_ROOT | b64dec -}}
 {{- end -}}
