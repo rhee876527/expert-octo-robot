@@ -37,7 +37,7 @@ spec:
                 - ALL
           ports:
             - containerPort: 8080
-          restartPolicy: Always
+      restartPolicy: Always
 
 ---
 apiVersion: v1
