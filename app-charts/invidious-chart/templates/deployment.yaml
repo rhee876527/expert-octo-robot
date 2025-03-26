@@ -37,7 +37,7 @@ spec:
               value: {{ include "get.invPass" . }}
             - name: POSTGRES_USER
               value: invidious
-          image: "{{ .Values.valkey.repository }}:{{ .Values.valkey.tag }}"
+          image: "{{ .Values.postgres.repository }}:{{ .Values.postgres.tag }}"
           livenessProbe:
             exec:
               command:

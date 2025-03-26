@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wikiless
+  name: wikiless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wikiless
+  template:
+    metadata:
+      labels:
+        app: wikiless
+    spec:
+      containers:
+        - env:
+            - name: DOMAIN
+              value: wikiless.{{ include "get.domain" . }}
+            - name: REDIS_URL
+              value: redis://{{ .Values.valkey.SERVICE }}:6379
+            - name: TZ
+              value: Africa/Nairobi
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: wikiless
+          readinessProbe:
+            tcpSocket:
+              host: {{ .Values.valkey.SERVICE }}
+              port: 6379
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - containerPort: 8080
+          restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wikiless
+spec:
+  selector:
+    app: wikiless
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

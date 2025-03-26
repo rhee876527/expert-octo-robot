@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bazarr
+  labels:
+    app: radarr
+  name: radarr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bazarr
+      app: radarr
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: bazarr
+        app: radarr
     spec:
       containers:
         - env:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: bazarr
+          name: radarr
           ports:
-            - containerPort: 6767
+            - containerPort: 7878
           securityContext:
             allowPrivilegeEscalation: false
             runAsGroup: {{ .Values.user.PGID }}
@@ -29,14 +31,14 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: media
-              mountPath: /data/media
+            - name: data
+              mountPath: /data
       restartPolicy: Always
       volumes:
       - name: config
         hostPath:
-          path: "{{ include "get.appsDir" . }}/bazarr/bazzarr"
-      - name: media
+          path: "{{ include "get.appsDir" . }}/radarr/raddarr"
+      - name: data
         hostPath:
           path: "{{ include "get.mediaDir" . }}"
 
@@ -44,11 +46,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bazarr
+  name: radarr
 spec:
   selector:
-    app: bazarr
+    app: radarr
   ports:
     - protocol: TCP
-      port: 6767
-      targetPort: 6767
+      port: 7878
+      targetPort: 7878

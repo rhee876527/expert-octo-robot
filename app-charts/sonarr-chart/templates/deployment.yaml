@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bazarr
+  labels:
+    app: sonarr
+  name: sonarr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bazarr
+      app: sonarr
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: bazarr
+        app: sonarr
     spec:
       containers:
         - env:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: bazarr
+          name: sonarr
           ports:
-            - containerPort: 6767
+            - containerPort: 8989
           securityContext:
             allowPrivilegeEscalation: false
             runAsGroup: {{ .Values.user.PGID }}
@@ -29,14 +31,14 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: media
-              mountPath: /data/media
+            - name: data
+              mountPath: /data
       restartPolicy: Always
       volumes:
       - name: config
         hostPath:
-          path: "{{ include "get.appsDir" . }}/bazarr/bazzarr"
-      - name: media
+          path: "{{ include "get.appsDir" . }}/sonarr/sonnarr"
+      - name: data
         hostPath:
           path: "{{ include "get.mediaDir" . }}"
 
@@ -44,11 +46,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bazarr
+  name: sonarr
 spec:
   selector:
-    app: bazarr
+    app: sonarr
   ports:
     - protocol: TCP
-      port: 6767
-      targetPort: 6767
+      port: 8989
+      targetPort: 8989

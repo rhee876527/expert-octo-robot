@@ -6,6 +6,13 @@ invidious:
   repository: quay.io/invidious/invidious
   tag: master-arm64@sha256:3f61e958dc994fde05e9d0b614e685feb546a60c1653f163f0b4292bb39f0a76
 
-postgres:
-  repository: postgres
-  tag: 15-alpine
+valkey:
+  repository: valkey/valkey
+  tag: alpine@sha256:3f61e958dc994fde05e9d0b614e685feb546a60c1653f163f0b4292bb39f0a76
+
+user:
+  PUID: 126
+  PGID: 130
+
+env:
+  TZ: Africa/Nairobi
