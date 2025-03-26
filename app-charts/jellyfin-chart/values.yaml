@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: jellyfin/jellyfin
-  tag: latest@sha256:b8fa3c3c2a5b7fe045e8f8eb95feac3c50b37837478ecc11d49db8fa8ddff683
+  tag: latest@sha256:96b09723b22fdde74283274bdc1f63b9b76768afd6045dd80d4a4559fc4bb7f3
 
 env:
   TZ: Africa/Nairobi
