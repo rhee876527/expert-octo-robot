@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: ghcr.io/home-operations/prowlarr
-  tag: rolling@sha256:b8fa3c3c2a5b7fe045e8f8eb95feac3c50b37837478ecc11d49db8fa8ddff683
+  tag: rolling@sha256:b1b4da4df605bec0ba810cf18abf91bc6569f5d8144a64da699cb78a7c2ec30c
 
 env:
   TZ: Africa/Nairobi
