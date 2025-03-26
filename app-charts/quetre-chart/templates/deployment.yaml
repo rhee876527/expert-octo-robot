@@ -20,12 +20,6 @@ spec:
               value: {{ .Values.valkey.SERVICE }}:6379
             - name: TZ
               value: "{{ .Values.env.TZ }}"
-          readinessProbe:
-            tcpSocket:
-              host: {{ .Values.valkey.SERVICE }}
-              port: 6379
-            initialDelaySeconds: 5
-            periodSeconds: 10
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: quora
           ports:
