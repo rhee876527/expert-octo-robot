@@ -120,5 +120,9 @@ spec:
                 domain: tube.{{ include "get.domain" . }}
           image: "{{ .Values.invidious.repository }}:{{ .Values.invidious.tag }}"
           name: invidious
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 3

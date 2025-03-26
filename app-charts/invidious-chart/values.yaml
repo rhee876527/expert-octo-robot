@@ -9,3 +9,7 @@ invidious:
 postgres:
   repository: postgres
   tag: 15-alpine
+
+user:
+  PUID: 133
+  PGID: 137
