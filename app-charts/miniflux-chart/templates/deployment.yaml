@@ -93,7 +93,7 @@ spec:
           command: ['sh', '-c', 'until nc -z miniflux-db 5432; do echo "Waiting for miniflux-db..."; sleep 2; done']
       containers:
         - name: miniflux
-          image: "{{ .Values.invidious.repository }}:{{ .Values.miniflux.tag }}"
+          image: "{{ .Values.miniflux.repository }}:{{ .Values.miniflux.tag }}"
           env:
             - name: ADMIN_PASSWORD
               value: {{ include "get.miniPass" . }}
