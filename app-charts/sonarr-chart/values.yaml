@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: ghcr.io/home-operations/sonarr
-  tag: rolling@sha256:b8fa3c3c2a5b7fe045e8f8eb95feac3c50b37837478ecc11d49db8fa8ddff683
+  tag: rolling@sha256:acd5416ab9c36d017687820a32f09d09a4e25a5754aa5ebeae2e7c63d7609c13
 
 env:
   TZ: Africa/Nairobi
