@@ -7,9 +7,8 @@
   "prHourlyLimit": 0,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true,
-      "platformAutomerge": true,
       "automergeType": "branch"
     },
     {
@@ -17,7 +16,6 @@
       "matchCurrentValue": "/^(latest|rolling|alpine)(@sha256:[a-f0-9]{64})?$/",
       "automerge": true,
       "automergeType": "branch",
-      "platformAutomerge": true,
       "matchPackageNames": ["*"]
     }
   ],
@@ -30,5 +28,6 @@
       ],
       "datasourceTemplate": "docker"
     }
-  ]
+  ],
+  "platformAutomerge": true
 }
