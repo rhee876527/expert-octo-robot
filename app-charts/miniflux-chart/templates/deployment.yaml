@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: miniflux-db
-          image: "{{ .Values.valkey.repository }}:{{ .Values.valkey.tag }}"
+          image: "{{ .Values.postgresImage.repository }}:{{ .Values.postgresImage.tag }}"
           env:
             - name: POSTGRES_DB
               value: miniflux-db
@@ -93,7 +93,7 @@ spec:
           command: ['sh', '-c', 'until nc -z miniflux-db 5432; do echo "Waiting for miniflux-db..."; sleep 2; done']
       containers:
         - name: miniflux
-          image: "{{ .Values.miniflux.repository }}:{{ .Values.miniflux.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           env:
             - name: ADMIN_PASSWORD
               value: {{ include "get.miniPass" . }}
