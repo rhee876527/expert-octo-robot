@@ -19,7 +19,7 @@ spec:
         - env:
             - name: VALKEY_EXTRA_FLAGS
               value: --save "" --appendonly no
-          image: "{{ .Values.valkeyImage.repository }}:{{ .Values.valkeyImage.tag }}"
+          image: "{{ .Values.valkey.repository }}:{{ .Values.valkey.tag }}"
           name: valkey
           ports:
             - containerPort: 6379
