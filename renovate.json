@@ -20,10 +20,14 @@
       "automerge": true
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["*"],
+      "matchDatasources": [
+        "docker"
+      ],
       "matchCurrentValue": "/^(latest|rolling)(@sha256:[a-f0-9]{64})?$/",
-      "automerge": true
+      "automerge": true,
+      "matchPackageNames": [
+        "*"
+      ]
     }
   ]
 }
