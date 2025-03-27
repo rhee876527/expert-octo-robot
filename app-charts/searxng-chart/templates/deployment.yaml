@@ -19,7 +19,7 @@ spec:
         - env:
             - name: VALKEY_EXTRA_FLAGS
               value: --save "" --appendonly no
-          image: "{{ .Values.valkey.repository }}:{{ .Values.valkey.tag }}"
+          image: "{{ .Values.valkeyImage.repository }}:{{ .Values.valkeyImage.tag }}"
           name: valkey
           ports:
             - containerPort: 6379
@@ -80,7 +80,7 @@ spec:
               value: {{ include "get.srxSecret" . }}
             - name: TZ
               value: "{{ .Values.env.TZ }}"
-          image: searxng/searxng:latest
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: searxng
           ports:
             - containerPort: 8080
