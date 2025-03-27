@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: lscr.io/linuxserver/jackett
-  tag: latest@sha256:a5ec860123a5c46c64f6dfd5514b9a2c59e0f0157872515b6b17f8b38372db
+  tag: latest@sha256:edcf5133c71a428eae138e549889b37787f2031f15e621c0182d7025da3cf55d
 
 env:
   TZ: Africa/Nairobi
