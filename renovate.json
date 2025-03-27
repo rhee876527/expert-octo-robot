@@ -8,12 +8,16 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "automerge": true,
+      "platformAutomerge": true,
+      "automergeType": "branch"
     },
     {
       "matchDatasources": ["docker"],
-      "matchCurrentValue": "/^(latest|rolling)(@sha256:[a-f0-9]{64})?$/",
+      "matchCurrentValue": "/^(latest|rolling|alpine)(@sha256:[a-f0-9]{64})?$/",
       "automerge": true,
+      "automergeType": "branch",
+      "platformAutomerge": true,
       "matchPackageNames": ["*"]
     }
   ],
