@@ -8,4 +8,4 @@ image:
 
 postgresImage:
   repository: postgres
-  tag: 15-alpine
+  tag: 17-alpine
