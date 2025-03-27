@@ -1,0 +1,14 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: abeltramo/cloudtube
+  pinned: sha256:d907ceecf0019df0479279353228fdcea9ad6735d510be76c4078a82d51208bc
+
+env:
+  TZ: Africa/Nairobi
+
+user:
+  PUID: 132
+  PGID: 136

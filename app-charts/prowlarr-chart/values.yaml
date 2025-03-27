@@ -1,0 +1,14 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: ghcr.io/home-operations/prowlarr
+  tag: rolling@sha256:b1b4da4df605bec0ba810cf18abf91bc6569f5d8144a64da699cb78a7c2ec30c
+
+env:
+  TZ: Africa/Nairobi
+
+user:
+  PUID: 1001
+  PGID: 1001

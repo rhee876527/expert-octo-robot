@@ -1,0 +1,8 @@
+# values.yaml
+image:
+  repository: timothyye/godns
+  tag: 3.2.2
+
+user:
+  PUID: 122
+  PGID: 128

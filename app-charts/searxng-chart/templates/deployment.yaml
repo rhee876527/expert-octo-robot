@@ -1,0 +1,128 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: valkey
+  name: valkey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valkey
+  template:
+    metadata:
+      labels:
+        app: valkey
+    spec:
+      containers:
+        - env:
+            - name: VALKEY_EXTRA_FLAGS
+              value: --save "" --appendonly no
+          image: "{{ .Values.valkeyImage.repository }}:{{ .Values.valkeyImage.tag }}"
+          name: valkey
+          ports:
+            - containerPort: 6379
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - SETGID
+                - SETUID
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /var/lib/redis
+              name: valkey-searxng-tmpfs0
+      restartPolicy: Always
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: valkey-searxng-tmpfs0
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey
+spec:
+  selector:
+    app: valkey
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: searxng
+  name: searxng
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: searxng
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: searxng
+    spec:
+      containers:
+        - env:
+            - name: SEARXNG_HOSTNAME
+              value: tafuta.{{ include "get.domain" . }}
+            - name: SEARXNG_SECRET
+              value: {{ include "get.srxSecret" . }}
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: searxng
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - SETGID
+                - SETUID
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+          volumeMounts:
+            - mountPath: /etc/searxng
+              name: searxng-hostpath0
+            - mountPath: /var/cache/searxng
+              name: favicons
+            - mountPath: /var/tmp
+              name: searxng-tmpfs0
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/searx/conf"
+          name: searxng-hostpath0
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/searx"
+          name: favicons
+        - emptyDir:
+            medium: Memory
+          name: searxng-tmpfs0
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searxng
+spec:
+  selector:
+    app: searxng
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

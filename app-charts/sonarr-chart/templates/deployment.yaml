@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sonarr
+  name: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: sonarr
+          ports:
+            - containerPort: 8989
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+      restartPolicy: Always
+      volumes:
+      - name: config
+        hostPath:
+          path: "{{ include "get.appsDir" . }}/sonarr/sonnarr"
+      - name: data
+        hostPath:
+          path: "{{ include "get.mediarootDir" . }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+spec:
+  selector:
+    app: sonarr
+  ports:
+    - protocol: TCP
+      port: 8989
+      targetPort: 8989

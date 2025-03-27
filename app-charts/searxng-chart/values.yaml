@@ -1,0 +1,18 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: searxng/searxng
+  tag: latest@sha256:cb56cfb87733769a09ab397afb528bcc97bf1e0add41bf1d721b8f54767c9b49
+
+valkeyImage:
+  repository: valkey/valkey
+  tag: alpine@sha256:d781a69ff6cc8175ac48c530175b95ef0bc53d4249fc5414f42e394bce3b60e0
+
+user:
+  PUID: 126
+  PGID: 130
+
+env:
+  TZ: Africa/Nairobi

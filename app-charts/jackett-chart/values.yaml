@@ -1,0 +1,14 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: linuxserver/jackett
+  tag: 0.22.1699
+
+env:
+  TZ: Africa/Nairobi
+
+user:
+  PUID: 131
+  PGID: 135

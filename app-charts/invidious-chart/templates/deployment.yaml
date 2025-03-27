@@ -1,0 +1,128 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: invidious
+            - name: POSTGRES_PASSWORD
+              value: {{ include "get.invPass" . }}
+            - name: POSTGRES_USER
+              value: invidious
+          image: "{{ .Values.postgres.repository }}:{{ .Values.postgres.tag }}"
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready -U invidious -d invidious
+            failureThreshold: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdata
+            - mountPath: /config/sql
+              name: postgres-hostpath1
+            - mountPath: /docker-entrypoint-initdb.d/init-invidious-db.sh
+              name: postgres-hostpath2
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/invidious/db"
+          name: postgresdata
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/invidious/invidious/config/sql"
+          name: postgres-hostpath1
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/invidious/invidious/docker/init-invidious-db.sh"
+          name: postgres-hostpath2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invidious
+spec:
+  selector:
+    app: invidious
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: invidious
+  name: invidious
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invidious
+  template:
+    metadata:
+      labels:
+        app: invidious
+    spec:
+      containers:
+        - env:
+            - name: INVIDIOUS_PORT
+              value: "3000"
+            - name: INVIDIOUS_CONFIG
+              value: |
+                db:
+                  dbname: invidious
+                  user: invidious
+                  password: {{ include "get.invPass" . }}
+                  host: postgres
+                  port: 5432
+                check_tables: true
+                popular_enabled: true
+                quality: hd720
+                login_enabled: false
+                statistics_enabled: false
+                hsts: true
+                hmac_key: {{ include "get.invHmac" . }}
+                https_only: true
+                external_port: 443
+                database_url: postgres://invidious:{{ include "get.invPass" . }}@postgres/invidious?auth_methods=md5,scram-sha-256
+                force_resolve: ipv4
+                domain: tube.{{ include "get.domain" . }}
+          image: "{{ .Values.invidious.repository }}:{{ .Values.invidious.tag }}"
+          name: invidious
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 3

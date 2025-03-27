@@ -1,0 +1,10 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: lscr.io/linuxserver/nextcloud
+  tag: latest@sha256:962ffa722d0c1eadb588315baa7ff1009974206588d8d05ac4399e0c6fa95de5
+
+env:
+  TZ: Africa/Nairobi

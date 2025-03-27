@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bazarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: bazarr
+          ports:
+            - containerPort: 6767
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /data/media
+      restartPolicy: Always
+      volumes:
+      - name: config
+        hostPath:
+          path: "{{ include "get.appsDir" . }}/bazarr/bazzarr"
+      - name: media
+        hostPath:
+          path: "{{ include "get.mediaDir" . }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+spec:
+  selector:
+    app: bazarr
+  ports:
+    - protocol: TCP
+      port: 6767
+      targetPort: 6767

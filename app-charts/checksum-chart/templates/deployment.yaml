@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: checksum-calculator
+  name: checksum-calculator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checksum-calculator
+  template:
+    metadata:
+      labels:
+        app: checksum-calculator
+    spec:
+      containers:
+        - image: {{ .Values.localRegistry.IP }}:5000/checksum-calculator:dev
+          imagePullPolicy: IfNotPresent
+          name: checksum-calculator
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checksum-calculator
+spec:
+  selector:
+    app: checksum-calculator
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

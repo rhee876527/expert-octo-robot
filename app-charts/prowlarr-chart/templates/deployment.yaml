@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prowlarr
+  name: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prowlarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: prowlarr
+          ports:
+            - containerPort: 9696
+          securityContext:
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /config
+              name: prowlarr-config
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/prowlarr/prowllarr"
+          name: prowlarr-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+spec:
+  selector:
+    app: prowlarr
+  ports:
+    - protocol: TCP
+      port: 9696
+      targetPort: 9696

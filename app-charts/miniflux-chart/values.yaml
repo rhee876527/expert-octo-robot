@@ -1,0 +1,11 @@
+# values.yaml
+secrets:
+  name: my-secrets
+
+image:
+  repository: miniflux/miniflux
+  tag: 2.2.6-distroless@sha256:c6b0af85d44d5e133d4d9844768dfe491aa0282bb9adac1dbfe7871f0947431c
+
+postgresImage:
+  repository: postgres
+  tag: 15-alpine

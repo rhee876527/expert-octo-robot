@@ -1,0 +1,10 @@
+# values.yaml
+image:
+  repository: ghcr.io/rhee876527/quetre
+  tag: latest@sha256:a250039499fb4254d099945c32a107ebee813d97577070ca562ef13eb74cded8
+
+env:
+  TZ: Africa/Nairobi
+
+valkey:
+  SERVICE: valkey

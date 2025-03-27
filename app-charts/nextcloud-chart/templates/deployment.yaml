@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nextcloud
+  name: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: nextcloud
+          ports:
+            - containerPort: 80
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /data
+              name: nextcloud-hostpath1
+            - mountPath: /config
+              name: nextcloud-hostpath2
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/nextcloud/nextcloud-data"
+          name: nextcloud-hostpath1
+        - hostPath:
+            path: "{{ include "get.appsDir" . }}/nextcloud/nextcloud-config"
+          name: nextcloud-hostpath2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+spec:
+  selector:
+    app: nextcloud
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -1,0 +1,76 @@
+# templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddy-config
+data:
+  global.conf: |
+    {
+      acme_ca https://acme.zerossl.com/v2/DV90
+      email {{ include "get.email" . }}
+    }
+    {{ include "get.domain" . }}, www.{{ include "get.domain" . }} {
+      root * /var/www/public
+      file_server {
+          index index.html
+        }
+    }
+    bazarr.{{ include "get.domain" . }} {
+      reverse_proxy bazarr:6767
+    }
+    shasum.{{ include "get.domain" . }} {
+      basic_auth {
+      {{ include "get.authuser" . }} {{ include "get.authpass" . }}
+      }
+      reverse_proxy checksum-calculator:8080
+    }
+    cd.{{ include "get.domain" . }} {
+      reverse_proxy changedetection:5000
+    }
+    jackett.{{ include "get.domain" . }} {
+      reverse_proxy jackett:9117
+    }
+    mat.{{ include "get.domain" . }} {
+      reverse_proxy cloudtube:10412
+    }
+    prowlarr.{{ include "get.domain" . }} {
+      reverse_proxy prowlarr:9696
+    }
+    jellyfin.{{ include "get.domain" . }} {
+      reverse_proxy jellyfin:8096
+    }
+    rss.{{ include "get.domain" . }} {
+      reverse_proxy miniflux:8080
+    }
+    tafuta.{{ include "get.domain" . }} {
+      reverse_proxy searxng:8080
+    }
+    quora.{{ include "get.domain" . }} {
+      reverse_proxy quetre:3000
+    }
+    sonarr.{{ include "get.domain" . }} {
+      reverse_proxy sonarr:8989
+    }
+    radarr.{{ include "get.domain" . }} {
+      reverse_proxy radarr:7878
+    }
+    wikiless.{{ include "get.domain" . }} {
+      reverse_proxy wikiless:8080
+    }
+    weddit.{{ include "get.domain" . }} {
+      reverse_proxy redlib:8080
+    }
+    tube.{{ include "get.domain" . }} {
+      reverse_proxy invidious:3000
+    }
+    stack.{{ include "get.domain" . }} {
+      reverse_proxy warp-overflow:8080
+    }
+    cloud.{{ include "get.domain" . }} {
+      reverse_proxy nextcloud:80
+      # Rewrites for Nextcloud-specific endpoints
+      rewrite /.well-known/carddav /remote.php/dav
+      rewrite /.well-known/caldav /remote.php/dav
+      rewrite /.well-known/webfinger /index.php/.well-known/webfinger
+      rewrite /.well-known/nodeinfo /index.php/.well-known/nodeinfo
+    }

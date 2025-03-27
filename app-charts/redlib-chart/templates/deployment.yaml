@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redlib
+  name: redlib
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redlib
+  template:
+    metadata:
+      labels:
+        app: redlib
+    spec:
+      containers:
+        - env:
+            - name: REDLIB_DEFAULT_FIXED_NAVBAR
+              value: "on"
+            - name: REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION
+              value: "on"
+            - name: REDLIB_DEFAULT_THEME
+              value: "{{ .Values.theme.DEFAULT }}"
+            - name: REDLIB_DEFAULT_USE_HLS
+              value: "on"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          livenessProbe:
+            exec:
+              command:
+                - wget
+                - --spider
+                - -q
+                - --tries=1
+                - http://localhost:8080/settings
+            periodSeconds: 300
+            timeoutSeconds: 3
+          name: redlib
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redlib
+spec:
+  selector:
+    app: redlib
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

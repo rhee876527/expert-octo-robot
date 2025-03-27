@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flaresolverr
+  name: flaresolverr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaresolverr
+  template:
+    metadata:
+      labels:
+        app: flaresolverr
+    spec:
+      containers:
+        - env:
+            - name: S6_READ_ONLY_ROOT
+              value: "1"
+            - name: TZ
+              value: "{{ .Values.env.TZ }}"
+          image: "{{ .Values.image.repository }}@{{ .Values.image.pinned }}"
+          name: flaresolverr
+          securityContext:
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 8191
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+spec:
+  selector:
+    app: flaresolverr
+  ports:
+    - protocol: TCP
+      port: 8191
+      targetPort: 8191
