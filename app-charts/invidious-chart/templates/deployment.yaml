@@ -37,7 +37,7 @@ spec:
               value: {{ include "get.invPass" . }}
             - name: POSTGRES_USER
               value: invidious
-          image: "{{ .Values.postgres.repository }}:{{ .Values.postgres.tag }}"
+          image: "{{ .Values.postgresImage.repository }}:{{ .Values.postgresImage.tag }}"
           livenessProbe:
             exec:
               command:
@@ -118,7 +118,7 @@ spec:
                 database_url: postgres://invidious:{{ include "get.invPass" . }}@postgres/invidious?auth_methods=md5,scram-sha-256
                 force_resolve: ipv4
                 domain: tube.{{ include "get.domain" . }}
-          image: "{{ .Values.invidious.repository }}:{{ .Values.invidious.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: invidious
           securityContext:
             allowPrivilegeEscalation: false

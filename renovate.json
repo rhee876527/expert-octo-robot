@@ -14,7 +14,7 @@
     },
     {
       "matchDatasources": ["docker"],
-      "matchCurrentValue": "/^(latest|rolling|alpine)(@sha256:[a-f0-9]{64})?$/",
+      "matchCurrentValue": "/^(latest|rolling|alpine|master-arm64)(@sha256:[a-f0-9]{64})?$/",
       "automerge": true,
       "automergeType": "branch",
       "matchPackageNames": ["*"]

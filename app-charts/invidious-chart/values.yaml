@@ -2,11 +2,11 @@
 secrets:
   name: my-secrets
 
-invidious:
+image:
   repository: quay.io/invidious/invidious
-  tag: master-arm64@sha256:3f61e958dc994fde05e9d0b614e685feb546a60c1653f163f0b4292bb39f0a76
+  tag: master-arm64@sha256:7c97322c4e1313784d5b60fa2678e820d24970bb3b63b8b0a7d9f08ec9add1f2
 
-postgres:
+postgresImage:
   repository: postgres
   tag: 15-alpine
 
