@@ -21,7 +21,7 @@ spec:
             - name: REDIS_URL
               value: redis://{{ .Values.valkey.SERVICE }}:6379
             - name: TZ
-              value: Africa/Nairobi
+              value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: wikiless
           readinessProbe:
