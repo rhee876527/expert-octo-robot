@@ -1,0 +1,43 @@
+services:
+  k3s:
+    image: rancher/k3s:${K3S_VERSION}-k3s1
+    container_name: k3s-server
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - npm
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/rancher/k3s:/var/lib/rancher/k3s
+      - /var/lib/kubelet:/var/lib/kubelet
+      - /etc/rancher:/etc/rancher
+      - /home/ubuntu/docker:/home/ubuntu/docker #apps-dir
+      - /mnt/vol1/data:/mnt/vol1/data #media-dir
+    ports:
+      - "6443:6443"
+      - "80:80"
+      - "443:443"
+      - "30006:30006"
+      - "30003:30003"
+    command: ["server", "--disable", "traefik"]
+
+  kubectl-installer:
+    image: alpine:latest
+    container_name: kubectl-installer
+    restart: "no"
+    environment:
+      - K3S_VERSION=${K3S_VERSION}
+    volumes:
+      - $HOME/.local/bin:/dl
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        mkdir -p /dl && \
+        echo "Downloading kubectl for version ${K3S_VERSION}..." && \
+        wget -qO /dl/kubectl "https://dl.k8s.io/release/${K3S_VERSION}/bin/linux/${ARCH}/kubectl" && \
+        chmod +x /dl/kubectl && \
+        echo "kubectl installed successfully."
+
+networks:
+  npm:
+    external: true
