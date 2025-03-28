@@ -24,12 +24,6 @@ spec:
               value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: wikiless
-          readinessProbe:
-            tcpSocket:
-              host: {{ .Values.valkey.SERVICE }}
-              port: 6379
-            initialDelaySeconds: 5
-            periodSeconds: 10
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
