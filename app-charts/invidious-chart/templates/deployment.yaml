@@ -41,7 +41,11 @@ spec:
           livenessProbe:
             exec:
               command:
-                - pg_isready -U invidious -d invidious
+                - pg_isready
+                - -U
+                - invidious
+                - -d
+                - invidious
             failureThreshold: 5
             periodSeconds: 10
             timeoutSeconds: 5
