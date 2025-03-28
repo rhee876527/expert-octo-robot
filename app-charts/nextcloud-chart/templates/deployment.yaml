@@ -20,6 +20,10 @@ spec:
         - env:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
+            - name: PUID
+              value: "{{ .Values.user.PUID }}"
+            - name: PGID
+              value: "{{ .Values.user.PGID }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: nextcloud
           ports:

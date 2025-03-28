@@ -8,3 +8,7 @@ image:
 
 env:
   TZ: Africa/Nairobi
+
+user:
+  PUID: 1001
+  PGID: 1001
