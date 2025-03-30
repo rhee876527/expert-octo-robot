@@ -11,13 +11,24 @@ mkdir -p "$PERSISTENT_DIR"
 
 function clone_or_fetch() {
     if [[ -d "$REPO_DIR/.git" ]]; then
-        # Repo exists, fetch latest changes
-        git -C "$REPO_DIR" fetch --prune origin
-        git -C "$REPO_DIR" reset --hard origin/$BRANCH
+        # Repo exists, fetch latest changes quietly
+        git -C "$REPO_DIR" fetch --prune origin >/dev/null 2>&1
+        # Get current HEAD before reset
+        PREV_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD 2>/dev/null || echo "none")
+        git -C "$REPO_DIR" reset --hard origin/$BRANCH >/dev/null 2>&1
+        # Get new HEAD after reset
+        NEW_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD)
+        # Compare and show HEAD message only if it changed
+        if [[ "$PREV_HEAD" != "$NEW_HEAD" && "$PREV_HEAD" != "none" ]]; then
+            echo "HEAD is now at $NEW_HEAD ($(git -C "$REPO_DIR" log -1 --oneline $NEW_HEAD))"
+        fi
     else
         # Fresh clone (ensure full history is available)
-        rm -rf "$REPO_DIR"
-        git clone "$REPO_URL" "$REPO_DIR"
+        rm -rf "$REPO_DIR"  # In case of partial/incomplete clones
+        git clone "$REPO_URL" "$REPO_DIR" >/dev/null 2>&1
+        # Show HEAD for fresh clone
+        NEW_HEAD=$(git -C "$REPO_DIR" rev-parse HEAD)
+        echo "HEAD is now at $NEW_HEAD ($(git -C "$REPO_DIR" log -1 --oneline $NEW_HEAD))"
     fi
 }
 
@@ -47,7 +58,6 @@ function detect_changes() {
         echo "$CHANGED_FILES"
         return 0
     else
-        echo "No changes detected in Helm charts."
         return 1
     fi
 }
