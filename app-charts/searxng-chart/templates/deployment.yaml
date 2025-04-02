@@ -18,7 +18,7 @@ spec:
       containers:
         - env:
             - name: VALKEY_EXTRA_FLAGS
-              value: --save "" --appendonly no
+              value: --save \"\" --appendonly no
           image: "{{ .Values.valkeyImage.repository }}:{{ .Values.valkeyImage.tag }}"
           name: valkey
           ports:
