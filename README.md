@@ -1,7 +1,7 @@
 ###### my k3s misadventures
 
 ### Preface
-Run self-hosted services in docker containers with `k3s`. Uses a `caddy` wrapper [caddy-docker-proxy](https://github.com/lucaslorentz/caddy-docker-proxy) that listens on the docker socket to auto-discover services to reverse proxy and issue TLS certificates automatically. Check `app-charts/caddy-chart` for more information.
+Run self-hosted services in docker containers with `k3s`. Uses a `caddy` wrapper [caddy-docker-proxy](https://github.com/lucaslorentz/caddy-docker-proxy) to reverse proxy and issue TLS certificates automatically. It also listens on the docker socket to auto-discover services: convenient dual use for docker services on same system. Check `app-charts/caddy-chart` for more information.
 
 Renovate automatically updates container image tags and a helm-updater script automatically applies those updates.
 
@@ -97,7 +97,7 @@ Install [helm](https://github.com/helm/helm).
 
 #### Automated unattended-upgrades
 
-`Renovate` listens on the `values.yaml` in all the `charts` in this `repo` and updates the `digest/version`. Minor/patch updates `bypass` PR creation and get merged to the branch directly. Major updates will require a PR approval for `merge`.
+[Renovate bot](https://github.com/apps/renovate) tracks `values.yaml` in all the `charts` in this `repo` and updates the `digest/version`. Minor/patch updates `bypass` PR creation and get merged to the branch directly. Major updates will require a PR approval for `merge`.
 
 #### Effecting upgrades
 
