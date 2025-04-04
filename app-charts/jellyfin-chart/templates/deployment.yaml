@@ -52,7 +52,7 @@ spec:
             - mountPath: /config
               name: jellyfin-hostpath1
             - mountPath: /waam
-              name: jellyfin-hostpath4
+              name: jellyfin-tmpfs0
             - mountPath: /data/movies
               name: jellyfin-hostpath2
             - mountPath: /data/tvshows
@@ -65,9 +65,10 @@ spec:
         - hostPath:
             path: "{{ include "get.appsDir" . }}/jellyfin/jellyfin"
           name: jellyfin-hostpath1
-        - hostPath:
-            path: /dev/shm
-          name: jellyfin-hostpath4
+        - name: jellyfin-tmpfs0
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
         - hostPath:
             path: "{{ include "get.mediaDir" . }}/tv"
           name: jellyfin-hostpath3
