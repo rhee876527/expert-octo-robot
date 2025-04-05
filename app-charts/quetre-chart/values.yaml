@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: ghcr.io/rhee876527/quetre
-  tag: latest@sha256:a250039499fb4254d099945c32a107ebee813d97577070ca562ef13eb74cded8
+  tag: latest@sha256:14709c37163fc05c24b313168f33f7d244f23408d3004bf1c92eca2c7612ec75
 
 env:
   TZ: Africa/Nairobi
