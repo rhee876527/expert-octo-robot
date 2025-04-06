@@ -10,6 +10,11 @@ spec:
   selector:
     matchLabels:
       app: valkey
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -66,7 +71,10 @@ spec:
     matchLabels:
       app: searxng
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
