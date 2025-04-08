@@ -24,6 +24,7 @@ Renovate automatically updates container image tags and a helm-updater script au
 - quetre
 - redlib
 - sonarr
+- dozzle
 
 
 #### Install K3S

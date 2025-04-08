@@ -24,6 +24,12 @@ data:
       }
       reverse_proxy checksum-calculator:8080
     }
+    doz.{{ include "get.domain" . }} {
+      basic_auth {
+      {{ include "get.authuser" . }} {{ include "get.authpass" . }}
+      }
+      reverse_proxy dozzle:8080
+    }
     cd.{{ include "get.domain" . }} {
       reverse_proxy changedetection:5000
     }

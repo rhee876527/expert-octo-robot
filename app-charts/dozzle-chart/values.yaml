@@ -1,0 +1,5 @@
+# values.yaml
+
+image:
+  repository: amir20/dozzle
+  tag: latest@sha256:ed6e585340cc9ad723356e9b2633473114bca52c43243a1044aaa005f6bee6ed
