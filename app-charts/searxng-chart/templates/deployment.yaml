@@ -105,22 +105,22 @@ spec:
             runAsUser: {{ .Values.user.PUID }}
           volumeMounts:
             - mountPath: /etc/searxng
-              name: searxng-hostpath0
-            - mountPath: /var/cache/searxng
-              name: favicons
-            - mountPath: /var/tmp
               name: searxng-tmpfs0
-      restartPolicy: Always
+            - mountPath: /var/cache/searxng
+              name: searxng-tmpfs1
+            - mountPath: /var/tmp
+              name: searxng-tmpfs2
       volumes:
-        - hostPath:
-            path: "{{ include "get.appsDir" . }}/searx/conf"
-          name: searxng-hostpath0
-        - hostPath:
-            path: "{{ include "get.appsDir" . }}/searx"
-          name: favicons
-        - emptyDir:
-            medium: Memory
-          name: searxng-tmpfs0
+      - emptyDir:
+          medium: Memory
+        name: searxng-tmpfs0
+      - emptyDir:
+          medium: Memory
+        name: searxng-tmpfs1
+      - emptyDir:
+          medium: Memory
+        name: searxng-tmpfs2
+      restartPolicy: Always
 
 ---
 apiVersion: v1
