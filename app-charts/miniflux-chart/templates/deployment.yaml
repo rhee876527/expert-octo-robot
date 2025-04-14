@@ -22,7 +22,10 @@ spec:
     matchLabels:
       app: miniflux-db
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -82,6 +85,11 @@ spec:
   selector:
     matchLabels:
       app: miniflux
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
