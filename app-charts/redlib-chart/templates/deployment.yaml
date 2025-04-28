@@ -23,6 +23,8 @@ spec:
         - env:
             - name: REDLIB_DEFAULT_FIXED_NAVBAR
               value: "on"
+            - name: REDLIB_ROBOTS_DISABLE_INDEXING
+              value: "on"
             - name: REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION
               value: "on"
             - name: REDLIB_DEFAULT_THEME
