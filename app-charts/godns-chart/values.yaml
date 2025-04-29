@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: timothyye/godns
-  tag: 3.2.3
+  tag: 3.2.4
 
 user:
   PUID: 122
