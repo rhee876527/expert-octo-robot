@@ -20,7 +20,7 @@ spec:
         app: jellyfin
     spec:
       containers:
-        - command: [ "sh", "-c", "chmod 666 /jellyfin/jellyfin/web/index.html; sleep 5; /jellyfin/jellyfin" ]
+          name: jellyfin
           env:
             - name: JELLYFIN_CACHE_DIR
               value: /config/cache
@@ -35,7 +35,6 @@ spec:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: jellyfin
           ports:
             - containerPort: 8096
           securityContext:
