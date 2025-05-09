@@ -1,29 +1,45 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "baseBranches": ["main"],
-  "labels": ["dependencies"],
+  "extends": [
+    "config:recommended"
+  ],
+  "baseBranches": [
+    "main"
+  ],
+  "labels": [
+    "dependencies"
+  ],
   "automergeStrategy": "auto",
   "ignoreTests": true,
   "prHourlyLimit": 0,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker"
+      ],
       "matchCurrentValue": "/^(latest|rolling|alpine|master-arm64)(@sha256:[a-f0-9]{64})?$/",
       "automerge": true,
       "automergeType": "branch",
-      "matchPackageNames": ["*"]
+      "matchPackageNames": [
+        "*"
+      ]
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [".*values\\.yaml$"],
+      "managerFilePatterns": [
+        "/.*values\\.yaml$/"
+      ],
       "matchStrings": [
         "repository:\\s*(?<depName>[^\\s]+)\\s+tag:\\s*(?<currentValue>[^\\s]+)"
       ],
