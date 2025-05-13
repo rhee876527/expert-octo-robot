@@ -37,7 +37,7 @@ spec:
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/prowlarr/prowllarr"
+            path: '{{ include "get.appsDir" . }}/prowlarr/prowllarr'
           name: prowlarr-config
 
 ---

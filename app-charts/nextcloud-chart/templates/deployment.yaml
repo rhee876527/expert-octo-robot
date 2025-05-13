@@ -41,10 +41,10 @@ spec:
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/nextcloud/nextcloud-data"
+            path: '{{ include "get.appsDir" . }}/nextcloud/nextcloud-data'
           name: nextcloud-hostpath1
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/nextcloud/nextcloud-config"
+            path: '{{ include "get.appsDir" . }}/nextcloud/nextcloud-config'
           name: nextcloud-hostpath2
 
 ---

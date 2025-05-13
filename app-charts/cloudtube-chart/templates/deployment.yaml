@@ -50,19 +50,19 @@ spec:
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/cloudtube/config.js"
+            path: '{{ include "get.appsDir" . }}/cloudtube/config.js'
           name: cloudtube-hostpath1
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/cloudtube/new.video"
+            path: '{{ include "get.appsDir" . }}/cloudtube/new.video'
           name: cloudtube-hostpath2
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/cloudtube/settings.pug"
+            path: '{{ include "get.appsDir" . }}/cloudtube/settings.pug'
           name: cloudtube-hostpath3
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/cloudtube/new.player.5"
+            path: '{{ include "get.appsDir" . }}/cloudtube/new.player.5'
           name: cloudtube-hostpath4
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/cloudtube/cloudtube/db"
+            path: '{{ include "get.appsDir" . }}/cloudtube/cloudtube/db'
           name: cloudtube-hostpath5
 
 ---

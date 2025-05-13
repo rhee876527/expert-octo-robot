@@ -41,10 +41,10 @@ spec:
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/jackett/jackett/blackhole"
+            path: '{{ include "get.appsDir" . }}/jackett/jackett/blackhole'
           name: jackett-blackhole
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/jackett/jackett/config"
+            path: '{{ include "get.appsDir" . }}/jackett/jackett/config'
           name: jackett-config
         - emptyDir:
             medium: Memory

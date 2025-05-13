@@ -40,10 +40,10 @@ spec:
       volumes:
       - name: config
         hostPath:
-          path: "{{ include "get.appsDir" . }}/radarr/raddarr"
+          path: '{{ include "get.appsDir" . }}/radarr/raddarr'
       - name: data
         hostPath:
-          path: "{{ include "get.mediarootDir" . }}"
+          path: '{{ include "get.mediarootDir" . }}'
 
 ---
 apiVersion: v1

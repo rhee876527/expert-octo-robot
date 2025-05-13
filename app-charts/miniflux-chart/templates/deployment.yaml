@@ -59,7 +59,7 @@ spec:
       volumes:
         - name: miniflux-db
           hostPath:
-            path: "{{ include "get.appsDir" . }}/miniflux/db"
+            path: '{{ include "get.appsDir" . }}/miniflux/db'
       restartPolicy: Always
 ---
 apiVersion: v1

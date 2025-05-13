@@ -63,13 +63,13 @@ spec:
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/invidious/db"
+            path: '{{ include "get.appsDir" . }}/invidious/db'
           name: postgresdata
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/invidious/invidious/config/sql"
+            path: '{{ include "get.appsDir" . }}/invidious/invidious/config/sql'
           name: postgres-hostpath1
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/invidious/invidious/docker/init-invidious-db.sh"
+            path: '{{ include "get.appsDir" . }}/invidious/invidious/docker/init-invidious-db.sh'
           name: postgres-hostpath2
 
 ---

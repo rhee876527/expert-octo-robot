@@ -38,10 +38,10 @@ spec:
       volumes:
       - name: config
         hostPath:
-          path: "{{ include "get.appsDir" . }}/bazarr/bazzarr"
+          path: '{{ include "get.appsDir" . }}/bazarr/bazzarr'
       - name: media
         hostPath:
-          path: "{{ include "get.mediaDir" . }}"
+          path: '{{ include "get.mediaDir" . }}'
 
 ---
 apiVersion: v1

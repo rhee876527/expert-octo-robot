@@ -51,11 +51,11 @@ spec:
             name: caddy-config
         - name: caddy-data-1
           hostPath:
-            path: "{{ include "get.appsDir" . }}/caddy/data"
+            path: '{{ include "get.appsDir" . }}/caddy/data'
 
         - name: caddy-data-2
           hostPath:
-            path: "{{ include "get.appsDir" . }}/caddy/www"
+            path: '{{ include "get.appsDir" . }}/caddy/www'
 
 ---
 apiVersion: v1

@@ -35,7 +35,7 @@ spec:
       volumes:
       - name: changedetection-data
         hostPath:
-          path: "{{ include "get.appsDir" . }}/changedetection/data"
+          path: '{{ include "get.appsDir" . }}/changedetection/data'
 
 ---
 apiVersion: v1
