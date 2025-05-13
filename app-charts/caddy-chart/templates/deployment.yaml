@@ -50,8 +50,9 @@ spec:
           configMap:
             name: caddy-config
         - name: caddy-data-1
-          persistentVolumeClaim:
-            claimName: caddy-pvc
+          hostPath:
+            path: "{{ include "get.appsDir" . }}/caddy/data"
+
         - name: caddy-data-2
           hostPath:
             path: "{{ include "get.appsDir" . }}/caddy/www"
@@ -77,16 +78,3 @@ spec:
       nodePort: 30006
   type: LoadBalancer
   externalTrafficPolicy: Local
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: caddy-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
-  resources:
-    requests:
-      storage: 1Gi
