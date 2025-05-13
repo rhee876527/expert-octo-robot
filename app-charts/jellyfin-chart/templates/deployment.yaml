@@ -20,62 +20,62 @@ spec:
         app: jellyfin
     spec:
       containers:
-          name: jellyfin
-          env:
-            - name: JELLYFIN_CACHE_DIR
-              value: /config/cache
-            - name: JELLYFIN_CONFIG_DIR
-              value: /config
-            - name: JELLYFIN_DATA_DIR
-              value: /config/data
-            - name: JELLYFIN_LOG_DIR
-              value: /config/log
-            - name: JELLYFIN_PublishedServerUrl
-              value: localhost
-            - name: TZ
-              value: "{{ .Values.env.TZ }}"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          ports:
-            - containerPort: 8096
-          securityContext:
-            capabilities:
-              add:
-                - CHOWN
-                - SETGID
-                - SETUID
-              drop:
-                - ALL
-            runAsGroup: {{ .Values.user.PGID }}
-            runAsUser: {{ .Values.user.PUID }}
-            allowPrivilegeEscalation: false
-          volumeMounts:
-            - mountPath: /cache
-              name: jellyfin-hostpath0
-            - mountPath: /config
-              name: jellyfin-hostpath1
-            - mountPath: /waam
-              name: jellyfin-tmpfs0
-            - mountPath: /data/movies
-              name: jellyfin-hostpath2
-            - mountPath: /data/tvshows
-              name: jellyfin-hostpath3
+      - name: jellyfin
+        env:
+          - name: JELLYFIN_CACHE_DIR
+            value: /config/cache
+          - name: JELLYFIN_CONFIG_DIR
+            value: /config
+          - name: JELLYFIN_DATA_DIR
+            value: /config/data
+          - name: JELLYFIN_LOG_DIR
+            value: /config/log
+          - name: JELLYFIN_PublishedServerUrl
+            value: localhost
+          - name: TZ
+            value: "{{ .Values.env.TZ }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+          - containerPort: 8096
+        securityContext:
+          capabilities:
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+            drop:
+              - ALL
+          runAsGroup: {{ .Values.user.PGID }}
+          runAsUser: {{ .Values.user.PUID }}
+          allowPrivilegeEscalation: false
+        volumeMounts:
+          - mountPath: /cache
+            name: jellyfin-hostpath0
+          - mountPath: /config
+            name: jellyfin-hostpath1
+          - mountPath: /waam
+            name: jellyfin-tmpfs0
+          - mountPath: /data/movies
+            name: jellyfin-hostpath2
+          - mountPath: /data/tvshows
+            name: jellyfin-hostpath3
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/jellyfin/cache"
+            path: '{{ include "get.appsDir" . }}/jellyfin/cache'
           name: jellyfin-hostpath0
         - hostPath:
-            path: "{{ include "get.appsDir" . }}/jellyfin/jellyfin"
+            path: '{{ include "get.appsDir" . }}/jellyfin/jellyfin'
           name: jellyfin-hostpath1
         - name: jellyfin-tmpfs0
           emptyDir:
             medium: Memory
             sizeLimit: 16Gi
         - hostPath:
-            path: "{{ include "get.mediaDir" . }}/tv"
+            path: '{{ include "get.mediaDir" . }}/tv'
           name: jellyfin-hostpath3
         - hostPath:
-            path: "{{ include "get.mediaDir" . }}/movies"
+            path: '{{ include "get.mediaDir" . }}/movies'
           name: jellyfin-hostpath2
 
 ---
