@@ -8,7 +8,7 @@ image:
 
 valkeyImage:
   repository: valkey/valkey
-  tag: alpine@sha256:3f8c9cc84611ec9954a339793262ad96af9bebd3599e8712271309013ec1be3c
+  tag: alpine@sha256:6a57d58c0a37cf7acc3045ac0fd6dd91be339774106ab4d9ca088013a096a99f
 
 user:
   PUID: 126
