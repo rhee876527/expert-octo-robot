@@ -79,7 +79,7 @@ Restart=always
 User=ubuntu
 WorkingDirectory=/home/ubuntu/docker/poor-mans-argocd
 Environment="HOME=/home/ubuntu"
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/ubuntu/.local/bin"
+Environment="PATH=/usr/bin:/home/ubuntu/.local/bin"
 
 [Install]
 WantedBy=multi-user.target
