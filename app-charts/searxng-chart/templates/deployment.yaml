@@ -37,14 +37,7 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
-          volumeMounts:
-            - mountPath: /var/lib/redis
-              name: valkey-searxng-tmpfs0
       restartPolicy: Always
-      volumes:
-        - emptyDir:
-            medium: Memory
-          name: valkey-searxng-tmpfs0
 
 ---
 apiVersion: v1
