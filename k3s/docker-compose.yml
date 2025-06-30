@@ -1,6 +1,6 @@
 services:
   k3s:
-    image: rancher/k3s:${K3S_VERSION}-k3s1
+    image: rancher/k3s:${K3S_VERSION}-k3s1-${ARCH}
     container_name: k3s-server
     privileged: true
     restart: unless-stopped
