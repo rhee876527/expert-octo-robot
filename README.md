@@ -103,3 +103,21 @@ Install [helm](https://github.com/helm/helm).
 #### Effecting upgrades
 
 Run `poor-mans-argocd/helm-updater.sh` on a regular interval (check the systemd service) to do `helm upgrade foo` on the charts tracked by this repo.
+
+#### Upgrading k3s server
+
+##### Easy 2 steps:
+
+
+###### 1. Get deprecated node id
+```
+k get no
+NAME           STATUS   ROLES                  AGE   VERSION
+5b3e00f37c95   Ready    control-plane,master   14m   v1.33.2+k3s1
+```
+
+
+###### 2. Update .env, recreate k3s container and delete old node
+```
+docker compose up -d --remove-orphans && sleep 8 && kubectl delete $nodeid
+```
