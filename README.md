@@ -119,5 +119,5 @@ NAME           STATUS   ROLES                  AGE   VERSION
 
 ###### 2. Update .env, recreate k3s container and delete old node
 ```
-docker compose up -d --remove-orphans && sleep 8 && kubectl delete $nodeid
+docker compose up -d --remove-orphans && sleep 8 && kubectl delete node $nodeid
 ```
