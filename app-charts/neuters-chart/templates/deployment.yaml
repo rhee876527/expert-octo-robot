@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: neuters
+  name: neuters
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neuters
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: neuters
+    spec:
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: neuters
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - containerPort: 13369
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: neuters
+spec:
+  selector:
+    app: neuters
+  ports:
+    - protocol: TCP
+      port: 13369
+      targetPort: 13369
