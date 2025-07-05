@@ -69,9 +69,6 @@ data:
     tube.{{ include "get.domain" . }} {
       reverse_proxy invidious:3000
     }
-    stack.{{ include "get.domain" . }} {
-      reverse_proxy warp-overflow:8080
-    }
     neuters.{{ include "get.domain" . }} {
       reverse_proxy neuters:13369
     }
