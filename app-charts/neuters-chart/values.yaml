@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: ghcr.io/rhee876527/neuters
-  tag: latest@sha256:3afb3891d5585f73d54b9373a78a206a58cf0da73918a2d6f4ce35b7e489f004
+  tag: latest@sha256:6a68f5309cc5037f9ccecbbe23a6f1e51bc7587dcdd10eed9047e7495eee6cea
 
 user:
   PUID: 137
