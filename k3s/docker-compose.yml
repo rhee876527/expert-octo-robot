@@ -5,7 +5,8 @@ services:
     privileged: true
     restart: unless-stopped
     networks:
-      - npm
+      npm:
+        ipv4_address: 172.24.0.94
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/rancher/k3s:/var/lib/rancher/k3s
