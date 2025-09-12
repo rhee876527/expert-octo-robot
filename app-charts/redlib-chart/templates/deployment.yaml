@@ -53,6 +53,9 @@ spec:
             readOnlyRootFilesystem: true
             runAsGroup: {{ .Values.user.PGID }}
             runAsUser: {{ .Values.user.PUID }}
+        - name: reboot-cron
+          image: busybox
+          command: ["/bin/sh", "-c", "sleep 7200; kill 1"]
       restartPolicy: Always
 
 ---
