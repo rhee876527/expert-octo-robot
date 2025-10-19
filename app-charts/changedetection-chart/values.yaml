@@ -4,4 +4,4 @@ secrets:
 
 image:
   repository: ghcr.io/dgtlmoon/changedetection.io
-  tag: 0.50.26
+  tag: 0.50.27
