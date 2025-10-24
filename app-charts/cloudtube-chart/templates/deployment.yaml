@@ -45,6 +45,9 @@ spec:
             - mountPath: /workdir/html/static/js/player.js
               name: cloudtube-hostpath4
               readOnly: true
+            - mountPath: /workdir/html/static/js/chapter-highlight.js
+              name: cloudtube-hostpath6
+              readOnly: true
             - mountPath: /workdir/db
               name: cloudtube-hostpath5
       restartPolicy: Always
@@ -64,6 +67,9 @@ spec:
         - hostPath:
             path: '{{ include "get.appsDir" . }}/cloudtube/cloudtube/db'
           name: cloudtube-hostpath5
+        - hostPath:
+            path: '{{ include "get.appsDir" . }}/cloudtube/chapter-highlight.js'
+          name: cloudtube-hostpath6
 
 ---
 apiVersion: v1
