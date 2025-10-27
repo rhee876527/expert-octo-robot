@@ -21,7 +21,7 @@ spec:
         - env:
             - name: DISABLE_VERSION_CHECK
               value: "true"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.pinned }}"
           name: changedetection
           ports:
             - containerPort: 5000
