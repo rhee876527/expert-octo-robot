@@ -15,6 +15,22 @@ data:
           index index.html
         }
     }
+
+    # Temu 'anubis'
+    # More: https://fxgn.dev/blog/anubis/
+    (snippet_verified) {
+        @unverified not header Cookie *verified*
+        handle @unverified {
+            header Content-Type text/html
+            respond <<EOF
+                <script>
+                document.cookie = 'verified=1; Path=/;';
+                window.location.reload();
+                </script>
+            EOF 418
+        }
+    }
+
     bazarr.{{ include "get.domain" . }} {
       reverse_proxy bazarr:6767
     }
@@ -37,6 +53,12 @@ data:
       reverse_proxy jackett:9117
     }
     mat.{{ include "get.domain" . }} {
+      # Serve robots.txt normally
+      @robots path /robots.txt
+      handle @robots {
+          reverse_proxy cloudtube:10412
+      }
+      import snippet_verified
       reverse_proxy cloudtube:10412
     }
     prowlarr.{{ include "get.domain" . }} {
@@ -61,12 +83,20 @@ data:
       reverse_proxy radarr:7878
     }
     wikiless.{{ include "get.domain" . }} {
+      import snippet_verified
       reverse_proxy wikiless:8080
     }
     weddit.{{ include "get.domain" . }} {
+      # Allowed for uptime monitor.
+      @monitor path /r/Fauxmoi/wiki/index/blistapproval
+      handle @monitor {
+          reverse_proxy redlib:8080
+      }
+      import snippet_verified
       reverse_proxy redlib:8080
     }
     tube.{{ include "get.domain" . }} {
+      import snippet_verified
       reverse_proxy invidious:3000
     }
     neuters.{{ include "get.domain" . }} {
