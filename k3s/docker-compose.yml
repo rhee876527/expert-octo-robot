@@ -7,6 +7,9 @@ services:
     networks:
       npm:
         ipv4_address: 172.24.0.94
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/rancher/k3s:/var/lib/rancher/k3s
