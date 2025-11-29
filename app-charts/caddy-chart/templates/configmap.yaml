@@ -71,6 +71,11 @@ data:
       reverse_proxy miniflux:8080
     }
     tafuta.{{ include "get.domain" . }} {
+      @robots path /robots.txt
+      handle @robots {
+          reverse_proxy searxng:8080
+      }
+      import snippet_verified
       reverse_proxy searxng:8080
     }
     quora.{{ include "get.domain" . }} {
