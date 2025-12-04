@@ -21,7 +21,6 @@ Renovate automatically updates container image tags and a helm-updater script au
 - invidious
 - jellyfin
 - nextcloud
-- quetre
 - redlib
 - sonarr
 - dozzle
