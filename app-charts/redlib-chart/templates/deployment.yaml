@@ -31,7 +31,7 @@ spec:
               value: "{{ .Values.theme.DEFAULT }}"
             - name: REDLIB_DEFAULT_USE_HLS
               value: "on"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.pinned }}"
           livenessProbe:
             exec:
               command:
