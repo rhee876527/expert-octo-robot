@@ -42,6 +42,8 @@ function start_tracking() {
 function detect_changes() {
     cd "$REPO_DIR"
 
+    CHANGED_FILES=""
+
     if [[ ! -f "$TRACKING_FILE" ]]; then
         echo "🚨 First-time setup detected!"
         echo "Run: $0 --start-tracking"
