@@ -78,9 +78,6 @@ data:
       import snippet_verified
       reverse_proxy searxng:8080
     }
-    quora.{{ include "get.domain" . }} {
-      reverse_proxy quetre:3000
-    }
     sonarr.{{ include "get.domain" . }} {
       reverse_proxy sonarr:8989
     }
