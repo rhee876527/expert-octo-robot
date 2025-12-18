@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: ghcr.io/rhee876527/wikiless
-  tag: latest@sha256:0f74d10a1da9f3b81f2e873072b031e1caf77d4d30f8d00bc204b1b2bd6c98d0
+  tag: latest@sha256:aa31e673f9ff4e5fd56551766c12e77964cba93c0abc96d736ee23cd856cc38e
 
 env:
   TZ: Africa/Nairobi
