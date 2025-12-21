@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: miniflux-db-backup
+spec:
+  #every Sun 02:00 UTC
+  schedule: "0 2 * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: pg-backup
+              image: "{{ .Values.postgresImage.repository }}:{{ .Values.postgresImage.tag }}"
+              env:
+                - name: PGPASSWORD
+                  value: {{ include "get.miniPass" . }}
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  mkdir -p /backup
+                  chown {{ .Values.user.PUID }}:{{ .Values.user.PGID }} backup
+                  pg_dump -h miniflux-db -U admin1 -d miniflux-db > /backup/miniflux_backup_$(date +%Y-%m-%d_%H:%M).sql
+                  chown {{ .Values.user.PUID }}:{{ .Values.user.PGID }} backup/miniflux_backup_*.sql
+                  ls -t /backup/miniflux_backup_*.sql 2>/dev/null | tail -n +4 | xargs -r rm -f
+              volumeMounts:
+                - mountPath: /backup
+                  name: backup-storage
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup-storage
+              hostPath:
+                path: {{ include "get.appsDir" . }}/miniflux/backup
+                type: DirectoryOrCreate

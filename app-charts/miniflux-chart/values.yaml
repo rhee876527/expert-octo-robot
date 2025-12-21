@@ -9,3 +9,7 @@ image:
 postgresImage:
   repository: postgres
   tag: 15-alpine
+
+user:
+  PUID: 1001
+  PGID: 1001
