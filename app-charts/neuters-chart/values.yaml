@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: hookedbehemoth/neuters
-  tag: latest@sha256:be002e893f3faf03b4b32800dec0ee4ba1faedcf356b062598dbc2fae682cfde
+  tag: latest@sha256:17876b1d770779c21bfc2b4ba9db6f90f9f331160e95e34d9c8f5ca6ba8c47cc
 
 user:
   PUID: 137
