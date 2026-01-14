@@ -105,18 +105,10 @@ Run `poor-mans-argocd/helm-updater.sh` on a regular interval (check the systemd 
 
 #### Upgrading k3s server
 
-##### Easy 2 steps:
+##### Easy 1 step:
 
 
-###### 1. Get deprecated node id
+###### 1. Update .env with new K3S_VERSION & recreate k3s container
 ```
-k get no
-NAME           STATUS   ROLES                  AGE   VERSION
-5b3e00f37c95   Ready    control-plane,master   14m   v1.33.2+k3s1
-```
-
-
-###### 2. Update .env, recreate k3s container and delete old node
-```
-docker compose up -d --remove-orphans && sleep 8 && kubectl delete node $nodeid
+docker compose up -d --remove-orphans
 ```

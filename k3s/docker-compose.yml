@@ -2,6 +2,7 @@ services:
   k3s:
     image: rancher/k3s:${K3S_VERSION}-k3s1
     container_name: k3s-server
+    hostname: k3s
     privileged: true
     restart: unless-stopped
     networks:
