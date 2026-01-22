@@ -3,8 +3,8 @@ secrets:
   name: my-secrets
 
 image:
-  repository: abeltramo/cloudtube
-  pinned: sha256:d907ceecf0019df0479279353228fdcea9ad6735d510be76c4078a82d51208bc
+  repository: ghcr.io/rhee876527/cloudtube
+  tag: latest@sha256:38ed509a8a4736372f747422eb8dd163c68e51c655601d324c141719b5d61d7b
 
 env:
   TZ: Africa/Nairobi

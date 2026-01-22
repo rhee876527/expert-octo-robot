@@ -34,42 +34,18 @@ spec:
             runAsUser: {{ .Values.user.PUID }}
           volumeMounts:
             - mountPath: /workdir/config/config.js
-              name: cloudtube-hostpath1
-              readOnly: true
-            - mountPath: /workdir/api/video.js
-              name: cloudtube-hostpath2
-              readOnly: true
-            - mountPath: /workdir/pug/settings.pug
-              name: cloudtube-hostpath3
-              readOnly: true
-            - mountPath: /workdir/html/static/js/player.js
-              name: cloudtube-hostpath4
-              readOnly: true
-            - mountPath: /workdir/html/static/js/chapter-highlight.js
-              name: cloudtube-hostpath6
+              name: cloudtube-hostpath0
               readOnly: true
             - mountPath: /workdir/db
-              name: cloudtube-hostpath5
+              name: cloudtube-hostpath1
       restartPolicy: Always
       volumes:
         - hostPath:
             path: '{{ include "get.appsDir" . }}/cloudtube/config.js'
-          name: cloudtube-hostpath1
-        - hostPath:
-            path: '{{ include "get.appsDir" . }}/cloudtube/new.video'
-          name: cloudtube-hostpath2
-        - hostPath:
-            path: '{{ include "get.appsDir" . }}/cloudtube/settings.pug'
-          name: cloudtube-hostpath3
-        - hostPath:
-            path: '{{ include "get.appsDir" . }}/cloudtube/new.player.5'
-          name: cloudtube-hostpath4
+          name: cloudtube-hostpath0
         - hostPath:
             path: '{{ include "get.appsDir" . }}/cloudtube/cloudtube/db'
-          name: cloudtube-hostpath5
-        - hostPath:
-            path: '{{ include "get.appsDir" . }}/cloudtube/chapter-highlight.js'
-          name: cloudtube-hostpath6
+          name: cloudtube-hostpath1
 
 ---
 apiVersion: v1
