@@ -20,7 +20,7 @@ spec:
         - env:
             - name: TZ
               value: "{{ .Values.env.TZ }}"
-          image: "{{ .Values.image.repository }}@{{ .Values.image.pinned }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: cloudtube
           ports:
             - containerPort: 10412
