@@ -98,6 +98,10 @@ data:
       reverse_proxy redlib:8080
     }
     tube.{{ include "get.domain" . }} {
+      @robots path /robots.txt
+      handle @robots {
+          reverse_proxy invidious:3000
+      }
       import snippet_verified
       reverse_proxy invidious:3000
     }
