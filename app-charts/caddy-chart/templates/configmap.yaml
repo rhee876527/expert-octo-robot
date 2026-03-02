@@ -85,6 +85,10 @@ data:
       reverse_proxy radarr:7878
     }
     wikiless.{{ include "get.domain" . }} {
+      @robots path /robots.txt
+      handle @robots {
+          reverse_proxy wikiless:8080
+      }
       import snippet_verified
       reverse_proxy wikiless:8080
     }
