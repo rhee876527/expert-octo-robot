@@ -38,6 +38,9 @@ Without this you have to `docker exec -it k3s-server ash` into the k3s server ev
 docker cp k3s-server:/etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 ```
 
+> [!WARNING]
+> This kubeconfig contains certificates with a 1-year expiry. You will need to regenerate the config after expiration.
+
 Add this to your bashrc.
 ```
 export KUBECONFIG=~/.kube/config
