@@ -66,15 +66,25 @@ function detect_changes() {
 
 function upgrade_charts() {
     CHARTS_TO_UPGRADE=($(echo "$CHANGED_FILES" | cut -d'/' -f2 | sort -u))
+    SUCCESSFUL_CHARTS=()
 
     for chart_name in "${CHARTS_TO_UPGRADE[@]}"; do
         chart_dir="$CHARTS_DIR/$chart_name"
-
         echo "Upgrading chart: $chart_name (from $chart_dir)"
-        helm upgrade "$chart_name" "$chart_dir"
+
+        if helm upgrade "$chart_name" "$chart_dir"; then
+            SUCCESSFUL_CHARTS+=("$chart_name")
+        else
+            echo "⚠️ Upgrade failed for $chart_name. Skipping."
+        fi
     done
-    git rev-parse HEAD > "$TRACKING_FILE"
-    echo "Upgrade complete. Tracking updated."
+
+    if [[ ${#SUCCESSFUL_CHARTS[@]} -gt 0 ]]; then
+        git rev-parse HEAD > "$TRACKING_FILE"
+        echo "Upgrade complete for charts: ${SUCCESSFUL_CHARTS[*]}. Tracking updated."
+    else
+        echo "No charts upgraded successfully. Tracking not updated."
+    fi
 }
 
 # Arguments
