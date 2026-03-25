@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: searxng/searxng
-  tag: latest@sha256:1c9406eff845e969b74586f495a73667c519a8cf8be352b586e8d07d0f3ee809
+  tag: latest@sha256:c4850cf4ad1954a4d93e0ad5aa8ce2c5b6ba067c889355ce970d820ac6080722
 
 valkeyImage:
   repository: valkey/valkey
