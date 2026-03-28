@@ -79,6 +79,8 @@ spec:
               value: tafuta.{{ include "get.domain" . }}
             - name: SEARXNG_SECRET
               value: {{ include "get.srxSecret" . }}
+            - name: GRANIAN_PORT
+              value: "8080"
             - name: TZ
               value: "{{ .Values.env.TZ }}"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
