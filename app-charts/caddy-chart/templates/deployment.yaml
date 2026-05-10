@@ -28,6 +28,12 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
           volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
