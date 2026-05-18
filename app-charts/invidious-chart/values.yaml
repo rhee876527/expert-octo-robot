@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: quay.io/invidious/invidious
-  tag: master-arm64@sha256:f7f256396627a355f3ae70f6c2e6e9563997dde494d98f4965234fe7fb056c3d
+  tag: master-arm64@sha256:4ec779d71c9a88140c622e017d25483dcde8b2c05efc73ebb30eece27304b784
 
 postgresImage:
   repository: postgres
