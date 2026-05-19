@@ -39,9 +39,9 @@ spec:
                 - --spider
                 - -q
                 - --tries=1
-                - http://localhost:8080/settings
+                - http://localhost:8080/r/Fauxmoi/wiki/index/blistapproval
             periodSeconds: 300
-            timeoutSeconds: 3
+            timeoutSeconds: 9
           name: redlib
           ports:
             - containerPort: 8080
