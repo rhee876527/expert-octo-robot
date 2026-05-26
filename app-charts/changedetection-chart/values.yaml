@@ -4,4 +4,4 @@ secrets:
 
 image:
   repository: ghcr.io/dgtlmoon/changedetection.io
-  pinned: 0.54.10
+  pinned: 0.55.7
