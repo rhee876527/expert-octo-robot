@@ -19,12 +19,12 @@ data:
     # Temu 'anubis'
     # More: https://fxgn.dev/blog/anubis/
     (snippet_verified) {
-        @unverified not header Cookie *verified*
+        @unverified not header Cookie *pass*
         handle @unverified {
             header Content-Type text/html
             respond <<EOF
                 <script>
-                document.cookie = 'verified=1; Path=/;';
+                document.cookie = 'pass=1; Path=/;';
                 window.location.reload();
                 </script>
             EOF 418
