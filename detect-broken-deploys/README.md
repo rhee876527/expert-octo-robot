@@ -17,9 +17,10 @@ Environment=TELEGRAM_BOT_TOKEN="564xxxxx:AAGxxx0ZOy1Pw9__ExxxxxxJPfeI8"
 Environment=TELEGRAM_CHAT_ID="-100xxxxxx"
 
 ExecStart=/bin/bash -c '\
+set -o pipefail; \
 LAST_ALERT=""; \
 while true; do \
-    MISMATCH=$(kubectl get deployments -o json | jq -r "[.items[] | select(.status.readyReplicas != .spec.replicas) | {name: .metadata.name, ready: (.status.readyReplicas // 0), desired: .spec.replicas}]"); \
+    MISMATCH=$(kubectl get deployments -o json | jq -r "[.items[] | select(.status.readyReplicas != .spec.replicas) | {name: .metadata.name, ready: (.status.readyReplicas // 0), desired: .spec.replicas}]") || exit 1; \
     CURRENT=$(echo "$MISMATCH" | jq -c .); \
     if [ "$CURRENT" != "$LAST_ALERT" ]; then \
         LAST_ALERT="$CURRENT"; \
