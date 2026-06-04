@@ -22,6 +22,13 @@ LAST_ALERT=""; \
 while true; do \
     MISMATCH=$(kubectl get deployments -o json | jq -r "[.items[] | select(.status.readyReplicas != .spec.replicas) | {name: .metadata.name, ready: (.status.readyReplicas // 0), desired: .spec.replicas}]") || exit 1; \
     CURRENT=$(echo "$MISMATCH" | jq -c .); \
+    \
+    if [ "$(echo "$MISMATCH" | jq length)" -gt 0 ]; then \
+        sleep 300; \
+        MISMATCH=$(kubectl get deployments -o json | jq -r "[.items[] | select(.status.readyReplicas != .spec.replicas) | {name: .metadata.name, ready: (.status.readyReplicas // 0), desired: .spec.replicas}]") || exit 1; \
+        CURRENT=$(echo "$MISMATCH" | jq -c .); \
+    fi; \
+    \
     if [ "$CURRENT" != "$LAST_ALERT" ]; then \
         LAST_ALERT="$CURRENT"; \
         COUNT=$(echo "$MISMATCH" | jq "length"); \
