@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: linuxserver/jackett
-  tag: 0.24.2007
+  tag: 0.24.2014
 
 env:
   TZ: Africa/Nairobi
