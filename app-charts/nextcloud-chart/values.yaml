@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: lscr.io/linuxserver/nextcloud
-  tag: latest@sha256:633588fd033ade7a5d8953f8a520ae921b88e3e986fe920cc323d6fd23a21fab
+  tag: latest@sha256:4de5f8f400f06690751c2f1a07d8bedb3eec084351e24f5ba074198da080be1c
 
 env:
   TZ: Africa/Nairobi
