@@ -61,6 +61,24 @@ spec:
               value: "k8s"
             - name: DOZZLE_NO_ANALYTICS
               value: "true"
+          livenessProbe:
+            exec:
+              command:
+                - /dozzle
+                - healthcheck
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - /dozzle
+                - healthcheck
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
 
 ---
 # service.yaml
