@@ -28,6 +28,20 @@ spec:
           name: valkey
           ports:
             - containerPort: 6379
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
