@@ -52,6 +52,18 @@ spec:
             failureThreshold: 5
             periodSeconds: 10
             timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - invidious
+                - -d
+                - invidious
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           name: postgres
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
@@ -127,6 +139,22 @@ spec:
                 domain: tube.{{ include "get.domain" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: invidious
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           securityContext:
             allowPrivilegeEscalation: false
             runAsGroup: {{ .Values.user.PGID }}
