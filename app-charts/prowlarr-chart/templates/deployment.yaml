@@ -27,6 +27,22 @@ spec:
           name: prowlarr
           ports:
             - containerPort: 9696
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 9696
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 9696
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           securityContext:
             runAsGroup: {{ .Values.user.PGID }}
             runAsUser: {{ .Values.user.PUID }}
