@@ -43,7 +43,7 @@ while true; do \
             curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
                 -d chat_id="$TELEGRAM_CHAT_ID" \
                 -d text="$MESSAGE" \
-                -d parse_mode="Markdown"; \
+                -d parse_mode="Markdown" || echo "Failed to send Telegram alert"; \
         fi; \
     fi; \
     sleep 3600; \
