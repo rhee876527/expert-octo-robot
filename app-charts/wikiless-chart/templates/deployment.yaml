@@ -20,7 +20,7 @@ spec:
         app: wikiless
     spec:
       initContainers:
-        - name: wait-for-db
+        - name: wait-for-valkey
           image: busybox
           command: ['sh', '-c', 'until nc -z {{ .Values.valkey.SERVICE }}.default.svc.cluster.local 6379; do echo "Waiting for valkey..."; sleep 2; done']
       containers:
