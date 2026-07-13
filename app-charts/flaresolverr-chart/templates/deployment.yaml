@@ -14,18 +14,38 @@ spec:
       labels:
         app: flaresolverr
     spec:
+      initContainers:
+        - name: wait-for-valkey
+          image: busybox
+          command: ['sh', '-c', 'until nc -z {{ .Values.valkey.SERVICE }}.default.svc.cluster.local 6379; do echo "Waiting for valkey..."; sleep 2; done']
       containers:
         - env:
-            - name: S6_READ_ONLY_ROOT
-              value: "1"
             - name: TZ
               value: "{{ .Values.env.TZ }}"
+            - name: REDIS_URL
+              value: redis://{{ .Values.valkey.SERVICE }}:6379
           image: "{{ .Values.image.repository }}@{{ .Values.image.pinned }}"
           name: flaresolverr
           securityContext:
             allowPrivilegeEscalation: false
           ports:
             - containerPort: 8191
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8191
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8191
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
       restartPolicy: Always
 
 ---
