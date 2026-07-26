@@ -1,7 +1,7 @@
 # values.yaml
 image:
   repository: ghcr.io/germondai/trawl
-  pinned: sha256:f282af7cf88072dd777698f7fbc554e0ccc39830c3d6e7670aa84cb347495303
+  pinned: sha256:728216a6a5e9654e3235bfa614c71e3847fe5826d3032fa2bca8083719ab355e
 
 env:
   TZ: Africa/Nairobi
