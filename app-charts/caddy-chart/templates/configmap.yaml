@@ -44,7 +44,9 @@ data:
       basic_auth {
       {{ include "get.authuser" . }} {{ include "get.authpass" . }}
       }
-      reverse_proxy dozzle:8080
+      reverse_proxy dozzle:8080 {
+        flush_interval -1
+      }
     }
     cd.{{ include "get.domain" . }} {
       reverse_proxy changedetection:5000
