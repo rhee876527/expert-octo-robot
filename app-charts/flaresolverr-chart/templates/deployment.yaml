@@ -28,6 +28,15 @@ spec:
           name: flaresolverr
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: {{ .Values.user.PGID }}
+            runAsUser: {{ .Values.user.PUID }}
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
           ports:
             - containerPort: 8191
           livenessProbe:
@@ -47,6 +56,10 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 3
       restartPolicy: Always
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: Memory
 
 ---
 apiVersion: v1

@@ -8,3 +8,7 @@ env:
 
 valkey:
   SERVICE: valkey
+
+user:
+  PUID: 123
+  PGID: 118
