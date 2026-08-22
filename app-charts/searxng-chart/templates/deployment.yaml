@@ -87,6 +87,24 @@ spec:
       labels:
         app: searxng
     spec:
+      initContainers:
+        - name: configure-limiter
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cat > /etc/searxng/limiter.toml <<'EOF'
+              [botdetection]
+              trusted_proxies = [
+                '127.0.0.0/8',
+                '::1',
+                '10.42.0.0/24',
+              ]
+              EOF
+          volumeMounts:
+            - mountPath: /etc/searxng
+              name: searxng-tmpfs0
       containers:
         - env:
             - name: SEARXNG_HOSTNAME
