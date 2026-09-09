@@ -8,5 +8,5 @@ image:
   repository: lucaslorentz/caddy-docker-proxy
   tag: 2.13.1@sha256:4c14f2ddb9c259903c464ac0423c936b10757bda7c57f8eb34b93efa903c8b8d
 proxyImage:
-  repository: tecnativa/docker-socket-proxy
-  pinned: v0.5.0@sha256:1f5038b54f06c3e18422902cf00ba21803d1c97805aae032e5e6673d532d3459
+  repository: ghcr.io/tecnativa/docker-socket-proxy
+  pinned: 3.4-pr-186@sha256:840aec215a829ae057e81d14c919265f5c3ea903cb0c0a90b994c212d97822a0

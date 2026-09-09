@@ -4,8 +4,11 @@ metadata:
   name: docker-socket-proxy-config
 data:
   haproxy.cfg.template: |
-    # Based on https://github.com/Tecnativa/docker-socket-proxy/blob/2e118a0c0c66e1831f68b7afd6d49ad3e2f96b5d/haproxy.cfg
-    # (v0.5.0). Only change: maxconn templated from .Values.caddyReplicas. Re-diff against upstream when bumping proxyImage.
+    # Based on https://github.com/Tecnativa/docker-socket-proxy/blob/e2e684f20428f8724e1a524511744d0db6604cbe/system_files/usr/local/etc/haproxy/haproxy.cfg.template
+    # (PR #186 hardening, image tag 3.4-pr-186). Only change: maxconn (global +
+    # defaults) templated from .Values.caddyReplicas, preserving upstream's 75%
+    # defaults-to-global ratio (3000/4000 at replicas=4).
+    # Re-diff against upstream when bumping proxyImage.
     global
         log stdout format raw daemon "${LOG_LEVEL}"
 
@@ -30,7 +33,7 @@ data:
         timeout server 10m
         timeout http-keep-alive 10s
         timeout check 10s
-        maxconn 3000
+        maxconn {{ mul .Values.caddyReplicas 750 }}
 
         # Allow seamless reloads
         load-server-state-from-file global
@@ -53,9 +56,33 @@ data:
 
     frontend dockerfrontend
         bind ${BIND_CONFIG}
-        http-request deny unless METH_GET || { env(POST) -m bool }
+        # --- Method ACLs ---
+        acl method_GET     method GET
+        acl method_HEAD    method HEAD
+        acl method_POST    method POST
+        acl method_DELETE  method DELETE
+        acl method_PUT     method PUT
+        acl method_PATCH   method PATCH
 
-        # Allowed endpoints
+        # --- Allow only enabled methods ---
+        http-request deny unless METH_GET || method_POST { env(POST) -m bool } || method_DELETE { env(DELETE) -m bool } || method_PUT { env(PUT) -m bool } || method_PATCH { env(PATCH) -m bool }
+
+        # --- Granular deny rules, evaluated BEFORE the allow rules below. ---
+        # Container-mutating operations stay disabled unless their dedicated flag
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/exec } !{ env(ALLOW_EXEC) -m bool }
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/kill } !{ env(ALLOW_KILL) -m bool }
+
+        # Attach is a get request, but allows to write to a container's stdin.
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/attach } !{ env(ALLOW_ATTACH) -m bool }
+
+        # Filesystem / information-exposing container sub-endpoints, gated behind
+        # their own flags even when CONTAINERS=1 is set.
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/archive } !{ env(ALLOW_ARCHIVE) -m bool }
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/export } !{ env(ALLOW_EXPORT) -m bool }
+        http-request deny if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/logs } !{ env(ALLOW_LOGS) -m bool }
+
+        # --- Allowed endpoints ---
+        # GET, HEAD, PUT & PATCH
         http-request allow if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/((stop)|(restart)|(kill)) } { env(ALLOW_RESTARTS) -m bool }
         http-request allow if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start } { env(ALLOW_START) -m bool }
         http-request allow if { path,url_dec -m reg -i ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop } { env(ALLOW_STOP) -m bool }
