@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: caddy
 spec:
-  replicas: 4
+  replicas: {{ .Values.caddyReplicas }}
   selector:
     matchLabels:
       app: caddy
@@ -25,6 +25,8 @@ spec:
               value: "npm"
             - name: CADDY_DOCKER_CADDYFILE_PATH
               value: "/etc/caddy/global.conf"
+            - name: DOCKER_HOST
+              value: "tcp://docker-socket-proxy:2375"
           ports:
             - containerPort: 80
             - containerPort: 443
@@ -35,9 +37,6 @@ spec:
             periodSeconds: 10
             failureThreshold: 3
           volumeMounts:
-            - name: docker-socket
-              mountPath: /var/run/docker.sock
-              readOnly: true
             - name: caddy-config
               mountPath: /etc/caddy/
               readOnly: true
@@ -49,9 +48,6 @@ spec:
 
       restartPolicy: Always
       volumes:
-        - name: docker-socket
-          hostPath:
-            path: /var/run/docker.sock
         - name: caddy-config
           configMap:
             name: caddy-config
