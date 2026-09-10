@@ -24,7 +24,7 @@ spec:
               value: "{{ .Values.env.TZ }}"
             - name: REDIS_URL
               value: redis://{{ .Values.valkey.SERVICE }}:6379
-          image: "{{ .Values.image.repository }}@{{ .Values.image.pinned }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.pinned }}"
           name: flaresolverr
           securityContext:
             allowPrivilegeEscalation: false
