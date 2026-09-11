@@ -8,7 +8,7 @@ image:
 
 postgresImage:
   repository: postgres
-  tag: 15-alpine
+  tag: 18-alpine
 
 user:
   PUID: 1001
