@@ -137,15 +137,11 @@ Review:
 
 Renovate updates new container images on an hourly basis day in day out. That's its job.
 The downside of this is a lot of images will be left dangling over time
- as k3s/containerd does not automatically prune dangling images: https://github.com/k3s-io/k3s/issues/1900#issuecomment-644453072
+ as kubelet threshold for automatically pruning dangling images may be too low: https://github.com/k3s-io/k3s/issues/1900#issuecomment-644453072
 
 For this we add the following config:
 ```
 ~ cat /etc/rancher/k3s/config.yaml
-containerd:
-  snapshotter:
-    prune_on_startup: true
-
 kubelet-arg:
   - "image-gc-high-threshold=85"
   - "image-gc-low-threshold=70"
