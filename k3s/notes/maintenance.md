@@ -12,7 +12,7 @@ I cover below steps how to reduce downtime because of this architectural flaw
  k3s/k8s/docker does not automatically handle on our behalf.
 
 
-###### Tips for reducing maintainer toll
+###### Tips for reducing maintainer toil
 
 
 ##### Docker
