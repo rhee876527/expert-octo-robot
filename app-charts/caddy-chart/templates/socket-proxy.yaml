@@ -195,3 +195,22 @@ spec:
       port: 2375
       targetPort: 2375
   type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: docker-socket-proxy
+spec:
+  podSelector:
+    matchLabels:
+      app: docker-socket-proxy
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: caddy
+      ports:
+        - protocol: TCP
+          port: 2375
