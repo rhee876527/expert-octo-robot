@@ -4,7 +4,7 @@ secrets:
 
 image:
   repository: ghcr.io/rhee876527/cloudtube-ng
-  tag: latest@sha256:01f4f2fc90ce1b5e80bf7d9dce22c031b283d211b931ef4eac51fa961c47bf7c
+  tag: latest@sha256:b0aa42be91560a3994ba8087782de92cb50913ea0456e4244b52b8dd11333263
 
 env:
   TZ: Africa/Nairobi
