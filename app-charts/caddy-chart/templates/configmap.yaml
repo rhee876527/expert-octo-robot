@@ -67,6 +67,9 @@ data:
       reverse_proxy prowlarr:9696
     }
     jellyfin.{{ include "get.domain" . }} {
+      # max-age avoids unnecessary revalidate
+      @jfimg path_regexp ^/Items/.+/Images/
+      header @jfimg Cache-Control "public, max-age=2592000"
       reverse_proxy jellyfin:8096
     }
     rss.{{ include "get.domain" . }} {
