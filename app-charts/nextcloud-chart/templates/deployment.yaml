@@ -27,7 +27,7 @@ spec:
               value: "{{ .Values.user.PUID }}"
             - name: PGID
               value: "{{ .Values.user.PGID }}"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.localRegistry.IP }}:5000/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: nextcloud
           ports:
             - containerPort: 80
