@@ -1,7 +1,7 @@
 # values.yaml
 image:
-  repository: ghcr.io/cycneuramus/containers
-  pinned: redlib@sha256:4b607fd58f2c170d9bbf073bfedbe570c5b6f29c7e72b3a2285e86d5c7f98af9
+  repository: ghcr.io/nachtalb/redlib
+  pinned: redlib@sha256:8538650db06a1012abbcd9a0b32bf6f7737c45edfe92dff21dc5e998a9e1c0a5
 
 user:
   PUID: 121
