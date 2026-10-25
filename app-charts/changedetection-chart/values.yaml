@@ -4,4 +4,4 @@ secrets:
 
 image:
   repository: ghcr.io/dgtlmoon/changedetection.io
-  pinned: 0.60.3@sha256:ecacd9fd0c664a786b77daadbbbf51373519b29178a32df3ddbc5c594bc067ed
+  pinned: 0.60.9@sha256:04eaae7915bad711160cb15abe160f6d3fabe98bbbd658509d4b7a654000fb2d
