@@ -1,7 +1,7 @@
 # values.yaml
 image:
-  repository: ghcr.io/nachtalb/redlib
-  pinned: redlib@sha256:8538650db06a1012abbcd9a0b32bf6f7737c45edfe92dff21dc5e998a9e1c0a5
+  repository: ghcr.io/mitchross/redlib
+  pinned: 2.3.8@sha256:77e413cb72e49e3ed468a75feb1d82551fbadbb087d994c6e9d22dd1bff429cb
 
 user:
   PUID: 121
